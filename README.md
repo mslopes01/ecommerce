@@ -1,5 +1,11 @@
-# Projeto E-commerce
+# Project E-commerce
 
-Projeto desenvolvido do zero no [Curso de PHP 7](https://www.udemy.com/curso-completo-de-php-7/) disponível na plataforma da Udemy e no site do [HTML5dev.com.br](https://www.html5dev.com.br/curso/curso-completo-de-php-7).
+Project E-commerce
 
-Template usado no projeto [Almsaeed Studio](https://almsaeedstudio.com)
+Project developed in PHP 7 with:
+phpmailer / phpmailer -> 5.2.22
+slim / slim -> 2.0
+rain / raintpl -> 3.0.0
+
+
+Template used in the [Almsaeed Studio] project (https://almsaeedstudio.com)
