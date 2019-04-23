@@ -77,6 +77,10 @@ class User extends Model
 	public function save(){
 		$sql = new Sql();
 
+		echo $this->getdeslogin();
+
+		exit;
+
 		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
 			":desperson"=>$this->getdesperson(),
 			":deslogin"=>$this->getdeslogin(),
