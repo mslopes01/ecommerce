@@ -6,9 +6,9 @@
     Lista de Produtos
   </h1>
   <ol class="breadcrumb">
-    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/admin/categories">Categorias</a></li>
-    <li class="active"><a href="/admin/categories/create">Cadastrar</a></li>
+    <li><a href="/arbeitfirma"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/arbeitfirma/categories">Categorias</a></li>
+    <li class="active"><a href="/arbeitfirma/categories/create">Cadastrar</a></li>
   </ol>
 </section>
 
@@ -23,7 +23,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/admin/products/create" method="post">
+        <form role="form" action="/arbeitfirma/products/create" method="post">
           <div class="box-body">
             <div class="form-group">
               <label for="desproduct">Nome da produto</label>
@@ -48,6 +48,10 @@
             <div class="form-group">
               <label for="vlweight">Peso</label>
               <input type="number" class="form-control" id="vlweight" name="vlweight" step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="desurl">URL</label>
+              <input type="text" class="form-control" id="desurl" name="desurl">
             </div>
           </div>
           <!-- /.box-body -->

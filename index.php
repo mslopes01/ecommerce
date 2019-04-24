@@ -8,8 +8,10 @@ use \Slim\Slim;
 $app = new Slim();
 
 require_once("site.php");
-
-require_once("admin.php");
+require_once("arbeitfirma.php");
+require_once("arbeitfirma-categories.php");
+require_once("arbeitfirma-products.php");
+require_once("arbeitfirma-users.php");
 
 $app->config('debug', true);
 

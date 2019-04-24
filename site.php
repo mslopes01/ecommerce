@@ -3,7 +3,7 @@
 use \Hcode\Page;
 use \Hcode\Model\User;
 use \Hcode\Model\Category;
-use \Hcode\Model\Products;
+use \Hcode\Model\Product;
 
 $app->get('/', function() {
     

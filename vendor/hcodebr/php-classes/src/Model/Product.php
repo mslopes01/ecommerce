@@ -23,13 +23,12 @@ class Product extends Model
 
 		$sql = new Sql();
 
-
-		$results = $sql->select("CALL sp_products_save(:idproduct, :desproduct, :vlprice, :vlwidth, :vlheigth, vllength, :vlweight, :desurl)", array(
+		$results = $sql->select("CALL sp_products_save(:idproduct, :desproduct, :vlprice, :vlwidth, :vlheight, :vllength, :vlweight, :desurl)", array(
 			":idproduct"=>$this->getidproduct(),
 			":desproduct"=>$this->getdesproduct(),
 			":vlprice"=>$this->getvlprice(),
 			":vlwidth"=>$this->getvlwidth(),
-			":vlheigth"=>$this->getvlheigth(),
+			":vlheight"=>$this->getvlheight(),
 			":vllength"=>$this->getvllength(),
 			":vlweight"=>$this->getvlweight(),
 			":desurl"=>$this->getdesurl()
@@ -65,6 +64,68 @@ class Product extends Model
 		$results = $sql->select("DELETE FROM tb_products WHERE idproduct = :idproduct", [
 			":idproduct"=>$this->getidproduct()
 		]);
+
+	}
+
+	public function checkPhoto()
+	{
+		if (file_exists($_SERVER['DOCUMENT_ROOT']
+			.DIRECTORY_SEPARATOR."resource"
+			.DIRECTORY_SEPARATOR."site"
+			.DIRECTORY_SEPARATOR."img"
+			.DIRECTORY_SEPARATOR."products"
+			.DIRECTORY_SEPARATOR.$this->getidproduct().".jpg"))
+		{
+			$url = "/resource/site/img/products/".$this->getidproduct().".jpg";
+		} else {
+			$url = "/resource/site/img/products/product.jpg";
+		}
+
+		return $this->setdesphoto($url);
+
+	}
+
+	public function getValues()
+	{
+		$this->checkPhoto(); 
+
+		$values = parent::getValues();
+
+		return $values;
+
+	}
+
+	public function setPhoto($file)
+	{
+		$extension = explode('.', $file['name']);
+		$extension = end($extension);
+
+		switch ($extension) {
+			case 'jpg':
+			case 'jpeg':
+				$image = imagecreatefromjpeg($file["tmp_name"]);
+				break;
+			case 'gif':
+				$image = imagecreatefromgif($file["tmp_name"]);
+				break;
+			case 'png':
+				$image = imagecreatefrompng($file["tmp_name"]);
+				break;
+			case 'bmp':
+				$image = imagecreatefromwbmp($file["tmp_name"]);
+				break;
+		}
+		$destiny = $_SERVER['DOCUMENT_ROOT']
+				.DIRECTORY_SEPARATOR."resource"
+				.DIRECTORY_SEPARATOR."site"
+				.DIRECTORY_SEPARATOR."img"
+				.DIRECTORY_SEPARATOR."products"
+				.DIRECTORY_SEPARATOR.$this->getidproduct().".jpg";
+		imagejpeg($image, $destiny);
+
+		imagedestroy($image);
+
+		$this->checkPhoto();
 
 	}
 		
