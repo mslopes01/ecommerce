@@ -12,9 +12,10 @@ require_once("arbeitfirma.php");
 require_once("arbeitfirma-categories.php");
 require_once("arbeitfirma-products.php");
 require_once("arbeitfirma-users.php");
+require_once("functions.php");
 
 $app->config('debug', true);
 
 $app->run();
 
- ?>
+?>

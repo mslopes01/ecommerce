@@ -7,12 +7,18 @@ use \Hcode\Model\Product;
 
 $app->get('/', function() {
     
+    $products = Product::listAll();
+
 	$page = new Page();
 
-	$page->setTpl("index");
+	$page->setTpl("index", [
+		'products'=>Product::checkList($products)
+	]);
 
 });
 
+
+//Route for categories
 $app->get("/categories/:idcategory", function($idcategory) {
 
 	$category = new Category();
@@ -27,5 +33,8 @@ $app->get("/categories/:idcategory", function($idcategory) {
 	]);
 
 });
+
+//Route for products
+
 
 ?>
