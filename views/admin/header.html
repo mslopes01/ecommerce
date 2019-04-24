@@ -256,8 +256,9 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="/arbeitfirma/users"><i class="fa fa-users"></i> <span>Users</span></a></li>
+        <li><a href="/arbeitfirma/users"><i class="fa fa-users"></i> <span>Users</span></a></li>
         <li><a href="/arbeitfirma/categories"><i class="fa fa-object-group"></i> <span>Categories</span></a></li>
+        <li><a href="/arbeitfirma/products"><i class="fa fa-cubes"></i> <span>Products</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
