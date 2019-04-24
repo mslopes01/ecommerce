@@ -55,7 +55,7 @@ class User extends Model
 
 	public function verifyLogin($inadmin = true)
 	{
-		if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["iduser"] > 0 ||(bool)$_SESSION[User::SESSION]["inadmin"] !==$inadmin)
+		if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["iduser"] > 0 || (bool)$_SESSION[User::SESSION]["inadmin"] !==$inadmin)
 		{
 			header("Location: /arbeitfirma/login");
 			exit;
