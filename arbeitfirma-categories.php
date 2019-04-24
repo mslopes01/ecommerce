@@ -3,6 +3,7 @@
 use \Hcode\PageAdmin;
 use \Hcode\Model\User;
 use \Hcode\Model\Category;
+use \Hcode\Model\Product;
 
 $app->get("/arbeitfirma/categories", function() {
 
@@ -91,6 +92,64 @@ $app->post("/arbeitfirma/categories/:idcategory", function($idcategory) {
 	header("Location: /arbeitfirma/categories");
 
     exit;
+
+});
+
+$app->get("/arbeitfirma/categories/:idcategory/products", function($idcategory) {
+
+	User::verifyLogin();
+
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$page = new PageAdmin;
+
+	$page->setTpl("categories-products", [
+		'category'=>$category->getValues(),
+		'productsRelated'=>$category->getProducts(),
+		'productsNotRelated'=>$category->getProducts(false)
+	]);
+
+});
+
+$app->get("/arbeitfirma/categories/:idcategory/products/:idproduct/add", function($idcategory, $idproduct) {
+
+	User::verifyLogin();
+
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$product = new Product();
+
+	$product->get((int)$idproduct);
+
+	$category->addProduct($product);
+
+	header("Location: /arbeitfirma/categories/".$idcategory."/products");
+
+	exit;
+
+});
+
+$app->get("/arbeitfirma/categories/:idcategory/products/:idproduct/remove", function($idcategory, $idproduct) {
+
+	User::verifyLogin();
+
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$product = new Product();
+
+	$product->get((int)$idproduct);
+
+	$category->removeProduct($product);
+
+	header("Location: /arbeitfirma/categories/".$idcategory."/products");
+
+	exit;
 
 });
 
