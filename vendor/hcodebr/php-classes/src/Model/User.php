@@ -13,7 +13,58 @@ class User extends Model
 {
 	const SESSION = "User";
 
-	
+	public static function getFromSession()
+	{
+
+		$user = new User();
+
+		if (isset($_SESSION[User::SESSION]) && (int)$_SESSION[User::SESSION]['iduser'] > 0) {
+
+			$user->setData($_SESSION[User::SESSION]);
+
+		}
+
+		return $user;
+
+	}
+
+	public static function checkLogin($inadmin = True)
+	{
+
+		$user = new User();
+
+		if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["iduser"] > 0) {
+
+			// Not logged in.
+			return false;
+
+		} else {
+
+			// Logged in.
+
+			if ($inadmin === true && (bool)$_SESSION[User::SESSION]["inadmin"]) {
+
+				// ... and is administrator
+				return true;
+
+			} else if ($inadmin === false) {
+
+				// ... and but is not administrator
+				return true;
+
+			} else {
+
+				// ... and is not logged in
+				return true;
+
+			}
+			
+
+		}
+
+		
+
+	}
 	
 	public static function login($login, $password)
 	{
@@ -55,7 +106,7 @@ class User extends Model
 
 	public function verifyLogin($inadmin = true)
 	{
-		if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["iduser"] > 0 || (bool)$_SESSION[User::SESSION]["inadmin"] !==$inadmin)
+		if (User::checkLogin($inadmin))
 		{
 			header("Location: /arbeitfirma/login");
 			exit;
