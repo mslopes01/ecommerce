@@ -1,6 +1,6 @@
 <?php
 
-use \Hcode\PageAdmin;
+use \Hcode\PageAdminSis;
 use \Hcode\Model\User;
 use \Hcode\Model\Category;
 use \Hcode\Model\Product;
@@ -11,7 +11,7 @@ $app->get("/arbeitfirma/categories", function() {
 
 	$categories = Category::listAll();
     
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("categories", [
 		'categories'=>$categories
@@ -23,7 +23,7 @@ $app->get("/arbeitfirma/categories/create", function() {
 
 	User::verifyLogin();
 
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("categories-create");
 
@@ -69,7 +69,7 @@ $app->get("/arbeitfirma/categories/:idcategory", function($idcategory) {
 
 	$category->get((int)$idcategory);
 
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("categories-update", [
 		"category"=>$category->getValues()
@@ -103,7 +103,7 @@ $app->get("/arbeitfirma/categories/:idcategory/products", function($idcategory) 
 
 	$category->get((int)$idcategory);
 
-	$page = new PageAdmin;
+	$page = new PageAdminSis;
 
 	$page->setTpl("categories-products", [
 		'category'=>$category->getValues(),

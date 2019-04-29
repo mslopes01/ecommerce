@@ -1,13 +1,13 @@
 <?php
 
-use \Hcode\PageAdmin;
+use \Hcode\PageAdminSis;
 use \Hcode\Model\User;
 
 $app->get('/arbeitfirma', function() {
 
 	User::verifyLogin();
     
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("index");
 
@@ -15,7 +15,7 @@ $app->get('/arbeitfirma', function() {
 
 $app->get('/arbeitfirma/login', function() {
     
-	$page = new PageAdmin([
+	$page = new PageAdminSis([
 		"header"=>false,
 		"footer"=>false
 

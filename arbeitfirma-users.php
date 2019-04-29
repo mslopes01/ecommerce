@@ -1,5 +1,5 @@
 <?php
-use \Hcode\PageAdmin;
+use \Hcode\PageAdminSis;
 use \Hcode\Model\User;
 
 $app->post("/arbeitfirma/users/create", function () {
@@ -32,7 +32,7 @@ $app->get('/arbeitfirma/users', function() {
 
 	$users = User::listAll();
     
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("users", array(
 		"users"=>$users
@@ -44,7 +44,7 @@ $app->get('/arbeitfirma/users/create', function() {
 
 	User::verifyLogin();
     
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("users-create");
 
@@ -74,7 +74,7 @@ $app->get('/arbeitfirma/users/:iduser', function($iduser) {
 
 	$user->get((int)$iduser);
     
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("users-update", array(
 		"user"=>$user->getValues()
@@ -106,7 +106,7 @@ $app->post('/arbeitfirma/users/:iduser', function($iduser) {
 
 $app->get("/arbeitfirma/forgot", function() {
     
-	$page = new PageAdmin([
+	$page = new PageAdminSis([
 		"header"=>false,
 		"footer"=>false
 
@@ -129,7 +129,7 @@ $app->post("/arbeitfirma/forgot", function() {
 
 $app->get("/arbeitfirma/forgot/sent", function() {
     
-	$page = new PageAdmin([
+	$page = new PageAdminSis([
 		"header"=>false,
 		"footer"=>false
 

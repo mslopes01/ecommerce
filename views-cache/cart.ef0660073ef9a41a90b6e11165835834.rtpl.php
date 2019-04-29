@@ -99,17 +99,17 @@
                                         <tbody>
                                             <tr class="cart-subtotal">
                                                 <th>Subtotal</th>
-                                                <td><span class="amount">$<?php echo formatPrice($cart["vlsubtotal"]); ?></span></td>
+                                                <td><span class="amount"><?php if( $cart["vlsubtotal"] > 0 ){ ?>$<?php echo formatPrice($cart["vlsubtotal"]); ?><?php }else{ ?> $0.00 <?php } ?></span></td>
                                             </tr>
 
                                             <tr class="shipping">
                                                 <th>Frete</th>
-                                                <td>$<?php echo formatPrice($cart["vlfreight"]); ?><?php if( $cart["nrdays"] > 0 ){ ?> <small>prazo de <?php echo htmlspecialchars( $cart["nrdays"], ENT_COMPAT, 'UTF-8', FALSE ); ?> dia(s)</small><?php } ?></td>
+                                                <td><?php if( $cart["vlfreight"] > 0 ){ ?>$<?php echo formatPrice($cart["vlfreight"]); ?><?php }else{ ?> $0.00 <?php } ?><?php if( $cart["nrdays"] > 0 ){ ?> <small>prazo de <?php echo htmlspecialchars( $cart["nrdays"], ENT_COMPAT, 'UTF-8', FALSE ); ?> dia(s)</small><?php } ?></td>
                                             </tr>
 
                                             <tr class="order-total">
                                                 <th>Total</th>
-                                                <td><strong><span class="amount">$<?php echo formatPrice($cart["vltotal"]); ?></span></strong> </td>
+                                                <td><strong><span class="amount"><?php if( $cart["vlsubtotal"] > 0 ){ ?>$<?php echo formatPrice($cart["vltotal"]); ?><?php }else{ ?> $0.00 <?php } ?></span></strong> </td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -1,6 +1,6 @@
 <?php
 
-use \Hcode\PageAdmin;
+use \Hcode\PageAdminSis;
 use \Hcode\Model\User;
 use \Hcode\Model\Product;
 
@@ -10,7 +10,7 @@ $app->get("/arbeitfirma/products", function() {
 
 	$product = Product::listAll();
     
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("products", [
 		'products'=>$product
@@ -22,7 +22,7 @@ $app->get("/arbeitfirma/products/create", function() {
 
 	User::verifyLogin();
 
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("products-create");
 
@@ -68,7 +68,7 @@ $app->get("/arbeitfirma/products/:idProducts", function($idproduct) {
 
 	$product->get((int)$idproduct);
 
-	$page = new PageAdmin();
+	$page = new PageAdminSis();
 
 	$page->setTpl("products-update", [
 		"product"=>$product->getValues()
