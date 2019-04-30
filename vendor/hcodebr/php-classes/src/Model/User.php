@@ -12,6 +12,8 @@ use \Hcode\Mailer;
 class User extends Model
 {
 	const SESSION = "User";
+	const ERROR = "UserError";
+	const ERROR_REGISTER = "UserErrorRegister";
 
 	public static function getFromSession()
 	{
@@ -31,9 +33,11 @@ class User extends Model
 	public static function checkLogin($inadmin = True)
 	{
 
-		$user = new User();
-
-		if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["iduser"] > 0) {
+		if (!isset($_SESSION[User::SESSION]) 
+			|| 
+			!$_SESSION[User::SESSION] 
+			|| 
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0) {
 
 			// Not logged in.
 			return false;
@@ -42,7 +46,7 @@ class User extends Model
 
 			// Logged in.
 
-			if ($inadmin === true && (bool)$_SESSION[User::SESSION]["inadmin"]) {
+			if ($inadmin === true && (bool)$_SESSION[User::SESSION]["inadmin"] === true) {
 
 				// ... and is administrator
 				return true;
@@ -55,7 +59,7 @@ class User extends Model
 			} else {
 
 				// ... and is not logged in
-				return true;
+				return false;
 
 			}
 			
@@ -70,7 +74,7 @@ class User extends Model
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_users WHERE deslogin = :LOGIN", array(
+		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE deslogin = :LOGIN", array(
 			":LOGIN"=>$login
 
 		));
@@ -87,11 +91,15 @@ class User extends Model
 
 			$user = new User();
 
+			$data['desperson'] = utf8_encode($data['desperson']);
+
 			//$user->setiduser($data["iduser"]);
 
 			$user->setData($data);
 
 			$_SESSION[User::SESSION] = $user->getValues();
+
+			return $user;
 
 			//var_dump($user);
 
@@ -106,11 +114,18 @@ class User extends Model
 
 	public function verifyLogin($inadmin = true)
 	{
-		if (User::checkLogin($inadmin))
+		//var_dump($inadmin);
+		//exit;
+		if (!User::checkLogin($inadmin))
 		{
-			header("Location: /arbeitfirma/login");
+			if ($inadmin) {
+				header("Location: /arbeitfirma/login");
+			} else {
+				header("Location: /login");
+			}
 			exit;
 		}
+		
 	}
 
 	public static function logout()
@@ -133,7 +148,7 @@ class User extends Model
 		exit;
 
 		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
-			":desperson"=>$this->getdesperson(),
+			":desperson"=>utf8_encode($this->getdesperson()),
 			":deslogin"=>$this->getdeslogin(),
 			":despassword"=>$this->getdespassword(),
 			":desemail"=>$this->getdesemail(),
@@ -162,7 +177,7 @@ class User extends Model
 
 		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
 			":iduser"=>$this->getiduser(),
-			":desperson"=>$this->getdesperson(),
+			":desperson"=>utf8_encode($this->getdesperson()),
 			":deslogin"=>$this->getdeslogin(),
 			":despassword"=>$this->getdespassword(),
 			":desemail"=>$this->getdesemail(),
@@ -227,6 +242,39 @@ class User extends Model
 				return $data;
 
 			}
+		}
+	}
+
+
+	public static function setError($msg)
+	{
+		$_SESSION[User::ERROR] = $msg;
+	}
+
+	public static function getError()
+	{
+		$msg = (isset($_SESSION[User::ERROR]) && $_SESSION[User::ERROR]) ? $_SESSION[User::ERROR] : '';
+
+		User::clearError();
+
+		return $msg;
+
+	}
+
+	public static function clearError()
+	{
+		$_SESSION[User::ERROR] = NULL;
+	}
+
+	public static function setErrorRegister($msg)
+	{
+		$_SESSION[User::ERROR_REGISTER] = $msg;
+	}
+	
+	public function updateFreight()
+	{
+		if ($this->getdeszipcode() != '') {
+			$this->setFreight($this->getdeszipcode());
 		}
 	}
 }
